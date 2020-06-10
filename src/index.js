@@ -1,17 +1,36 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+class App extends React.Component {
+    constructor() {
+        super();
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+        this.state = {
+            todo: "",
+        };
+    }
+
+    handleChange = (event) => {
+      this.setState({
+        todo: event.target.value
+      })
+    }
+
+    render() {
+        return (
+            <div className="app">
+                <h1>To-Do Wizard</h1>
+                <form action="">
+                    <input
+                        type="text"
+                        placeholder="Add Item"
+                        onChange={this.handleChange}
+                        value={this.state.todo}
+                    />
+                </form>
+            </div>
+        );
+    }
+}
+
+ReactDOM.render(<App />, document.getElementById("root"));
