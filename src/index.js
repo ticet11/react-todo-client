@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import './styles/main.css'
+import "./styles/main.css";
 
 class App extends React.Component {
     constructor() {
@@ -9,13 +9,14 @@ class App extends React.Component {
 
         this.state = {
             todo: "",
+            todos: [],
         };
     }
 
     addTodoItem = (event) => {
-      event.preventDefault()
-      console.log(this.state, 'Form Submitted')
-    }
+        event.preventDefault();
+        console.log(this.state, "Form Submitted");
+    };
 
     handleChange = (event) => {
         this.setState({
@@ -23,18 +24,34 @@ class App extends React.Component {
         });
     };
 
+    componentDidMount = () => {
+        fetch("http://localhost:5000/todos")
+            .then((res) => res.json())
+            .then((data) => {
+                this.setState({
+                    todos: data,
+                });
+            })
+            .catch((error) => {
+                console.error("todos fetch error", error);
+            });
+    };
+
     render() {
         return (
             <div className="app">
                 <h1>To-Do Wizard</h1>
-                <form className='add-todo' onSubmit={this.addTodoItem}>
+                <form
+                    className="add-todo"
+                    onSubmit={this.addTodoItem}
+                >
                     <input
                         type="text"
                         placeholder="Add Item"
                         onChange={this.handleChange}
                         value={this.state.todo}
                     />
-                <button type="submit">Cast</button>
+                    <button type="submit">Cast</button>
                 </form>
             </div>
         );
