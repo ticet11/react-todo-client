@@ -11,7 +11,8 @@ export default class TodoItem extends React.Component {
 
     onCheck = () => {
         fetch(
-            `http://localhost:5000/todo/${this.props.todoData.id}`,
+            // `http://localhost:5000/todo/${this.props.todoData.id}`,
+            `https://bk-todo-flask-api.herokuapp.com/todo/${this.props.todoData.id}`,
             {
                 method: "PATCH",
                 headers: { "content-type": "application/json" },
