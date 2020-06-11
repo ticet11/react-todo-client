@@ -33,7 +33,7 @@ class App extends React.Component {
                 });
             })
             .catch((error) => {
-                console.log("AddTodo error", error);
+                console.error("AddTodo error", error);
             });
     };
 
