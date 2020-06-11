@@ -36,8 +36,21 @@
 .todo-item {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     width: 80%;
 }
+
+.check-item {
+    display: flex;
+    align-items: center;
+}
+
+.todo-item button {
+    border-radius: 90px;
+    background: red;
+    color: white;
+}
+
 .done {
     color: black;
     text-decoration: line-through;

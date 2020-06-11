@@ -5,40 +5,48 @@ export default class TodoItem extends React.Component {
         super(props);
 
         this.state = {
-            done: props.todoData.done
-        }
+            done: props.todoData.done,
+        };
     }
 
     onCheck = () => {
-        fetch(`http://localhost:5000/todo/${this.props.todoData.id}`,{
-            method: 'PATCH',
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({
-                done: !this.state.done
+        fetch(
+            `http://localhost:5000/todo/${this.props.todoData.id}`,
+            {
+                method: "PATCH",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify({
+                    done: !this.state.done,
+                }),
+            }
+        )
+            .then(() => {
+                this.setState({
+                    done: !this.state.done,
+                });
             })
-        })
-        .then(() => {
-            this.setState({
-                done: !this.state.done
-            })
-        })
-        .catch(error => {
-            console.error('toggle done error', error)
-        })
-    }
+            .catch((error) => {
+                console.error("toggle done error", error);
+            });
+    };
 
     render() {
-        const { title } = this.props.todoData;
+        const { title, id } = this.props.todoData;
         return (
             <div className="todo-item">
-                <input 
-                type="checkbox"
-                defaultChecked={this.state.done}
-                onClick={this.onCheck}
-                />
-                <p className={this.state.done ? 'done' : null} >
-                    {title}
-                </p>
+                <div className='check-item'>
+                    <input
+                        type="checkbox"
+                        defaultChecked={this.state.done}
+                        onClick={this.onCheck}
+                    />
+                    <p className={this.state.done ? "done" : null}>
+                        {title}
+                    </p>
+                </div>
+                <button onClick={() => this.props.deleteTodoItem(id)}>
+                    X
+                </button>
             </div>
         );
     }

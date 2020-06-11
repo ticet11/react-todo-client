@@ -22,18 +22,35 @@ class App extends React.Component {
             url: "http://localhost:5000/todo",
             headers: { "content-type": "application/json" },
             data: {
-              title: this.state.todo,
-              done: false
-            }
-        }).then(response => {
-          this.setState({
-            todos: [...this.state.todos, response.data],
-            todo: ''
-          })
+                title: this.state.todo,
+                done: false,
+            },
         })
-        .catch(error => {
-          console.log('AddTodo error', error)
+            .then((response) => {
+                this.setState({
+                    todos: [...this.state.todos, response.data],
+                    todo: "",
+                });
+            })
+            .catch((error) => {
+                console.log("AddTodo error", error);
+            });
+    };
+
+    deleteTodoItem = (id) => {
+        fetch(`http://localhost:5000/todo/${id}`, {
+            method: "DELETE",
         })
+            .then(() => {
+                this.setState({
+                    todos: this.state.todos.filter(
+                        (todo) => todo.id != id
+                    ),
+                });
+            })
+            .catch((error) => {
+                console.error("delete item error", error);
+            });
     };
 
     handleChange = (event) => {
@@ -57,7 +74,7 @@ class App extends React.Component {
 
     renderTodos = () => {
         return this.state.todos.map((todo) => {
-            return <TodoItem key={todo.id} todoData={todo} />;
+            return <TodoItem key={todo.id} todoData={todo} deleteTodoItem={this.deleteTodoItem} />;
         });
     };
 
